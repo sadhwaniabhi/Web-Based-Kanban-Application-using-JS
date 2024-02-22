@@ -9,7 +9,7 @@ const completed = document.querySelector(".cards.completed");
 const taskBox = [todo,inprogress,completed];
 
 // Card generate template
-function generateTemplate(task,index){
+function generateTemptate(task,index){
     const card = `
                     <form class="card" draggable="true" data-id="${task.taskId}">
                         <input type="text" name="task" value="${task.content}" autocomplete="off" disabled>
@@ -60,12 +60,15 @@ const taskUpdateForm = document.querySelectorAll("form.card");
 taskUpdateForm.forEach(form =>{
     form.addEventListener("click",Event =>{
         Event.preventDefault();
+
+        // first we capture the edit button click and make changes
         if (Event.target.classList.contains("edit")){
             Event.target.classList.add("hide");
             form.task.removeAttribute("disabled");
             Event.target.nextElementSibling.classList.remove("hide");
         }
 
+        // then we capture the update button click and make changes
         if(Event.target.classList.contains("update")){
             const columnId = Event.target.dataset.column;
 
@@ -80,6 +83,8 @@ taskUpdateForm.forEach(form =>{
 
         }
 
+
+        // Since, we have a reference to the form we also capture the click on delete button
         if(Event.target.classList.contains("delete")){
             Event.preventDefault();
             form.remove();
@@ -92,7 +97,7 @@ taskUpdateForm.forEach(form =>{
 
 // draging task from one box to another
 taskBox.forEach(column=>{
-    // start dragging
+    // start dragging and add the dragging class to the card which we are dragging
     column.addEventListener("dragstart",Event=>{
         if(Event.target.classList.contains("card")){
             Event.target.classList.add("dragging");
@@ -100,9 +105,11 @@ taskBox.forEach(column=>{
     })
 
 
-    // drag over
+    // drag over functionality
     column.addEventListener("dragover",Event => {
         const card = document.querySelector(".dragging");
+
+        // append the card over the column we drag over and want to place
         column.appendChild(card);
     
     })
