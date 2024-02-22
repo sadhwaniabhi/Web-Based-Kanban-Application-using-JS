@@ -9,7 +9,7 @@ const completed = document.querySelector(".cards.completed");
 const taskBox = [todo,inprogress,completed];
 
 // Card generate template
-function generateTemptate(task,index){
+function generateTemplate(task,index){
     const card = `
                     <form class="card" draggable="true" data-id="${task.taskId}">
                         <input type="text" name="task" value="${task.content}" autocomplete="off" disabled>
